@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Wishlist - PriceWise{% endblock %}
+{% block content %}
+<main class="wrap page">
+  <h1>Wishlist</h1>
+  <p class="who">Saved for {{ session.get('user') }}</p>
+  {% if items %}
+  <p class="sub">Prices are from the day you saved each product and may have changed since.</p>
+  {% for it in items %}
+  <article class="card">
+    {% if it.images %}<div class="media"><img src="{{ it.images[0] }}" data-alt='{{ it.images[1:]|tojson }}' alt="{{ it.name }}" decoding="async" referrerpolicy="no-referrer"></div>
+    {% else %}<div class="media none">No image available</div>{% endif %}
+    <h3>{{ it.name }}</h3>
+    {% if it.spec %}<p class="spec">{{ it.spec }}</p>{% endif %}
+    <div class="stores">
+      <div class="store{% if it.cheaper == 'amazon' %} best{% endif %}">
+        <div class="store-head"><span>Amazon</span></div>
+        {% if it.amazon %}<p class="price">{{ it.amazon.price|inr }}</p>{% else %}<p class="na">Not listed</p>{% endif %}
+      </div>
+      <div class="store{% if it.cheaper == 'flipkart' %} best{% endif %}">
+        <div class="store-head"><span>Flipkart</span></div>
+        {% if it.flipkart %}<p class="price">{{ it.flipkart.price|inr }}</p>{% else %}<p class="na">Not listed</p>{% endif %}
+      </div>
+    </div>
+    <div class="diff win"><div class="row"><span>Best price</span><strong>{{ it.best_price|inr }}</strong></div><small>{{ it.best_store }}</small></div>
+    <p class="saved-on">Saved on {{ it.saved_on }}. <a href="{{ url_for('home', q=it.search_q) }}">Check current prices</a></p>
+    <div class="stores">
+      {% if it.amazon %}<a class="view" href="{{ it.amazon.url }}" target="_blank" rel="noopener noreferrer">View on Amazon</a>{% endif %}
+      {% if it.flipkart %}<a class="view" href="{{ it.flipkart.url }}" target="_blank" rel="noopener noreferrer">View on Flipkart</a>{% endif %}
+    </div>
+    <form method="post" action="{{ url_for('wishlist_remove') }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <input type="hidden" name="id" value="{{ it.id }}">
+      <button class="remove" type="submit"><span aria-hidden="true">&#9829;</span> Remove from Wishlist</button>
+    </form>
+  </article>
+  {% endfor %}
+  {% else %}
+  <div class="empty">
+    <div class="empty-icon" aria-hidden="true">&#9825;</div>
+    <h2>Your Wishlist is empty</h2>
+    <p>Tap the heart on a product to save it here.</p>
+    <a class="btn-link" href="{{ url_for('home', focus=1) }}">Search products</a>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

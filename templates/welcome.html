@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}PriceWise: compare electronics prices on Amazon and Flipkart{% endblock %}
+{% block content %}
+<main class="welcome">
+  <div class="welcome-in">
+    <div class="welcome-brand">
+      <svg class="logo" width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#FFCB2E"/><path d="M7 12h13v3H7z" fill="#0F172A"/><path d="M7 18h18v3H7z" fill="#0F172A"/></svg>
+      <h1>PriceWise</h1>
+    </div>
+    <p class="welcome-tag">Compare. Choose. Save.</p>
+    <p class="welcome-text">Search any phone, laptop or other electronic product and see its live price on <strong>Amazon India</strong> and <strong>Flipkart</strong>, side by side.</p>
+    <a class="btn-start" href="{{ url_for('signup') }}">Get Started</a>
+    <p class="welcome-login">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+  </div>
+</main>
+{% endblock %}

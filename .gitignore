@@ -1,0 +1,12 @@
+debug/*.png
+debug/*.html
+profiles/
+venv/
+.venv/
+__pycache__/
+*.pyc
+pricewise.db
+.secret_key
+.env
+.env.*
+!.env.example

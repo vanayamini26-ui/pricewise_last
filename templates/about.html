@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}About PriceWise{% endblock %}
+{% block content %}
+<main class="wrap about">
+  <h1>About PriceWise</h1>
+  <p class="sub">PriceWise is a B.Tech project that helps you decide where to buy an electronic product: Amazon India or Flipkart.</p>
+
+  <h2>How to use it</h2>
+  <ol class="plain">
+    <li>Search for a product, for example "Samsung Galaxy S24".</li>
+    <li>PriceWise reads the current listed price on both stores.</li>
+    <li>Compare the two prices and the difference, then open the store you prefer.</li>
+  </ol>
+
+  <h2>What to know</h2>
+  <ul class="plain">
+    <li>Prices are read live when you search. A repeat search within two minutes may reuse the earlier result, and you can use "Refresh prices" to read the stores again.</li>
+    <li>Only the same product variant is compared, so a 128 GB phone is never compared with a 256 GB one.</li>
+    <li>If a store cannot be reached, PriceWise says "Data unavailable" and never shows an old or estimated price.</li>
+    <li>Prices are the listed prices. Coupons and bank offers applied at checkout are not included.</li>
+    <li>Only electronics are shown. PriceWise is not connected to Amazon or Flipkart.</li>
+  </ul>
+</main>
+{% endblock %}

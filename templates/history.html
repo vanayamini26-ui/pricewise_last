@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Search History - PriceWise{% endblock %}
+{% block content %}
+<main class="wrap page">
+  <div class="page-head">
+    <h1>Search History</h1>
+    {% if terms %}
+    <form method="post" action="{{ url_for('history_clear') }}" onsubmit="return confirm('Clear all your recent searches?')">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <button class="clear-btn" type="submit">Clear History</button>
+    </form>
+    {% endif %}
+  </div>
+  <p class="who">Searches by {{ session.get('user') }}</p>
+  {% if terms %}
+  <p class="sub">Tap a search to run it again.</p>
+  <ul class="hist">
+    {% for t in terms %}
+    <li><a href="{{ url_for('home', q=t) }}">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+      <span>{{ t }}</span>
+      <svg class="chev" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+    </a></li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="empty">
+    <div class="empty-icon" aria-hidden="true">&#128339;</div>
+    <h2>No recent searches</h2>
+    <p>Your recent searches will appear here.</p>
+    <a class="btn-link" href="{{ url_for('home', focus=1) }}">Search products</a>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

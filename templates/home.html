@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}PriceWise: compare Amazon and Flipkart prices{% endblock %}
+{% block content %}
+<main class="wrap">
+  <section class="intro">
+    <p class="hello">Hi, {{ name }}</p>
+    <h1>Search for an electronic product</h1>
+    <p class="sub">PriceWise compares the live listed price of phones, laptops and other electronics on <strong>Amazon India</strong> and <strong>Flipkart</strong>.</p>
+    <form id="f" class="search" role="search" autocomplete="off">
+      <label class="sr" for="q">Product name</label>
+      <input id="q" type="search" name="q" placeholder="e.g. Galaxy S24" minlength="2" maxlength="100" required enterkeyhint="search">
+      <button class="btn" id="go" type="submit">Search</button>
+    </form>
+    <p class="try">Try:
+      <button type="button" data-q="iPhone 17 256GB">iPhone 17 256GB</button>
+      <button type="button" data-q="Samsung Galaxy S25 Ultra">Galaxy S25 Ultra</button>
+      <button type="button" data-q="boAt Rockerz 450">boAt Rockerz 450</button>
+    </p>
+  </section>
+
+  <section id="results" class="results" aria-live="polite" hidden>
+    <div class="results-head">
+      <h2 id="results-title">Results</h2>
+      <button id="refresh" class="link-btn" type="button" hidden>Refresh prices</button>
+    </div>
+    <div id="notices"></div>
+    <div id="out"></div>
+  </section>
+</main>
+{% endblock %}
+{% block scripts %}<script src="{{ asset('app.js') }}" defer></script>{% endblock %}

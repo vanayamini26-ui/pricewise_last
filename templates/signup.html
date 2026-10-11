@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% from "_fields.html" import field %}
+{% block title %}Create your PriceWise account{% endblock %}
+{% block content %}
+<main class="auth">
+  <div class="auth-card">
+    <div class="auth-brand">{% include "logo.html" %}<span>PriceWise</span></div>
+    <p class="tagline">Compare. Choose. Save.</p>
+
+    <form id="signup-form" class="auth-form" method="post" action="{{ url_for('signup_post') }}" novalidate data-mode="signup">
+      <h1>Create your account</h1>
+      <p class="sub">Your wishlist and search history are saved to your email.</p>
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <p class="form-err" id="signup-form-err" role="alert">{{ errors.form }}</p>
+      {{ field('signup', 'name', 'Name', 'text', 'name', values.name, errors.name, 'name') }}
+      {{ field('signup', 'email', 'Email', 'email', 'email', values.email, errors.email, 'email') }}
+      {{ field('signup', 'pw', 'Password', 'password', 'password', '', errors.password, 'new-password', 'At least 6 characters.') }}
+      {{ field('signup', 'confirm', 'Confirm password', 'password', 'confirm', '', errors.confirm, 'new-password') }}
+      <button class="btn" type="submit">Create account</button>
+    </form>
+    <p class="switch">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+  </div>
+</main>
+{% endblock %}
+{% block scripts %}<script src="{{ asset('auth.js') }}" defer></script>{% endblock %}

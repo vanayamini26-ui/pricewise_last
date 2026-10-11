@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{% block title %}PriceWise{% endblock %}</title>
+<meta name="description" content="PriceWise compares electronics prices on Amazon India and Flipkart.">
+<meta name="theme-color" content="#0F172A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F172A'/%3E%3Cpath d='M7 12h13v3H7z' fill='%23FFCB2E'/%3E%3Cpath d='M7 18h18v3H7z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('style.css') }}">
+{% if session.get('user') %}<meta name="csrf-token" content="{{ csrf_token() }}">{% endif %}
+</head>
+<body{% if session.get('user') %} class="has-nav"{% endif %}>
+{% if session.get('user') %}
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="{{ url_for('home') }}" aria-label="PriceWise home">
+      {% include "logo.html" %}<span>PriceWise</span>
+    </a>
+    <button id="menu-btn" class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav id="menu" class="menu" aria-label="Menu">
+      <a href="{{ url_for('home') }}" {% if active in ('home', 'search') %}aria-current="page"{% endif %}>Home</a>
+      <a href="{{ url_for('wishlist_page') }}" {% if active == 'wishlist' %}aria-current="page"{% endif %}>&#9825;&nbsp; Wishlist</a>
+      <a href="{{ url_for('history_page') }}" {% if active == 'history' %}aria-current="page"{% endif %}>&#128339;&nbsp; History</a>
+      <a href="{{ url_for('about') }}" {% if active == 'about' %}aria-current="page"{% endif %}>About</a>
+      <form method="post" action="{{ url_for('logout') }}">
+        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+        <button type="submit">Logout</button>
+      </form>
+    </nav>
+  </div>
+</header>
+{% endif %}
+{% block content %}{% endblock %}
+{% if session.get('user') %}
+<nav class="tabbar" aria-label="Sections">
+  <div class="tabbar-in">
+    <a class="tab" href="{{ url_for('home') }}" {% if active == 'home' %}aria-current="page"{% endif %}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg><span>Home</span></a>
+    <a class="tab" href="{{ url_for('home', focus=1) }}" {% if active == 'search' %}aria-current="page"{% endif %}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span>Search</span></a>
+    <a class="tab" href="{{ url_for('wishlist_page') }}" {% if active == 'wishlist' %}aria-current="page"{% endif %}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/></svg><span>Wishlist</span></a>
+    <a class="tab" href="{{ url_for('history_page') }}" {% if active == 'history' %}aria-current="page"{% endif %}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>History</span></a>
+  </div>
+</nav>
+{% endif %}
+{% if session.get('user') %}<script src="{{ asset('site.js') }}" defer></script>{% endif %}
+{% block scripts %}{% endblock %}
+</body>
+</html>

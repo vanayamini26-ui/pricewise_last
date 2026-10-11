@@ -1,0 +1,14 @@
+{% macro field(form, id, label, type, name, value, error, autocomplete, hint='') %}
+<div class="field">
+  <label for="{{ form }}-{{ id }}">{{ label }}</label>
+  <div class="control">
+    <input id="{{ form }}-{{ id }}" name="{{ name }}" type="{{ type }}" value="{{ value }}" autocomplete="{{ autocomplete }}"
+           {% if name in ('login', 'email') %}autocapitalize="none" autocorrect="off" spellcheck="false" inputmode="email"{% endif %}
+           {% if name == 'name' %}autocapitalize="words"{% endif %}
+           aria-describedby="{{ form }}-{{ id }}-err" {% if error %}aria-invalid="true"{% endif %} required>
+    {% if type == 'password' %}<button class="pw-toggle" type="button" data-toggle-pw aria-label="Show password" aria-pressed="false">Show</button>{% endif %}
+  </div>
+  {% if hint %}<p class="hint">{{ hint }}</p>{% endif %}
+  <p class="err" id="{{ form }}-{{ id }}-err" role="alert">{{ error }}</p>
+</div>
+{% endmacro %}
